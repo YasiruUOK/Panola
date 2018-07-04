@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Batch" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Subject" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Category" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     count(ST.LastID),
+     T.CopyAvailable-count(ST.LastID),
+     T.`Tute_ID`,
+     T.`Name`,
+     T.`Date`,
+     subject.`Name` AS subject_Name
+FROM
+     `Tute` T INNER JOIN `Student_Tute_Details` ST ON T.`Tute_ID` = ST.`Tute_ID`
+     INNER JOIN `subject` subject ON T.`Subject_ID` = subject.`ID`
+WHERE
+     T.Year = $P{Batch}
+     and T.Subject_ID = $P{Subject}
+     and T.Category = $P{Category}
+GROUP BY
+     T.Tute_ID]]>
+	</queryString>
+	<field name="count(ST.LastID)" class="java.lang.Long"/>
+	<field name="T.CopyAvailable-count(ST.LastID)" class="java.lang.Long"/>
+	<field name="Tute_ID" class="java.lang.String"/>
+	<field name="Name" class="java.lang.String"/>
+	<field name="Date" class="java.sql.Date"/>
+	<field name="subject_Name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="34"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Panola Institute Of Education]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="34" width="555" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mathugama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="73" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Tute Details]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<textField>
+				<reportElement x="73" y="25" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Batch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="25" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Category}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="25" width="41" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Batch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="25" width="55" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Subject]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="25" width="46" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="265" y="25" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subject_Name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="14" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tute ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="14" width="155" height="20"/>
+				<textElement/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="14" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Published Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="14" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[No Of Issued]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="14" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[No of Copy Available]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Tute_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="155" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{count(ST.LastID)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{T.CopyAvailable-count(ST.LastID)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

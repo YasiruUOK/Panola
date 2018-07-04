@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Subject" class="java.lang.String"/>
+	<parameter name="Category" class="java.lang.String"/>
+	<parameter name="SearchYear" class="java.lang.String"/>
+	<parameter name="SearchMonth" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     student.`Name` AS student_Name,
+     student.`address` AS student_address,
+     student.`phoneNumber` AS student_phoneNumber
+FROM
+     `student` student INNER JOIN `studentbatchsubjectdetails` studentbatchsubjectdetails ON student.`NIC` = studentbatchsubjectdetails.`NIC`
+     INNER JOIN `studentclassfeepayment` studentclassfeepayment ON studentbatchsubjectdetails.`LastID` = studentclassfeepayment.`LastID`
+     INNER JOIN `subject` subject ON studentbatchsubjectdetails.`SubID` = subject.`ID`
+WHERE
+     studentbatchsubjectdetails.year = $P{Year}
+     and studentbatchsubjectdetails.category = $P{Category}
+     and subject.name = $P{Subject}
+     and PaymentMounth NOT IN ($P{SearchYear}&$P{SearchMonth})]]>
+	</queryString>
+	<field name="student_Name" class="java.lang.String"/>
+	<field name="student_address" class="java.lang.String"/>
+	<field name="student_phoneNumber" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="34"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Panola Institute Of Education]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="34" width="555" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Mathugama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="48" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Class Fee Arries Student Details]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="70" width="553" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="451" y="29" width="45" height="20"/>
+				<textElement/>
+				<text><![CDATA[Month]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="29" width="23" height="20"/>
+				<textElement/>
+				<text><![CDATA[Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="65" height="20"/>
+				<textElement/>
+				<text><![CDATA[Search for]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="30" height="20"/>
+				<textElement/>
+				<text><![CDATA[Batch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="0" width="39" height="20"/>
+				<textElement/>
+				<text><![CDATA[Subject]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="0" width="47" height="20"/>
+				<textElement/>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="0" width="50" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Subject}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Category}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="29" width="64" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{SearchYear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="496" y="29" width="47" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{SearchMonth}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="45" width="555" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Student Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Contact Number]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="21" width="554" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{student_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{student_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{student_phoneNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

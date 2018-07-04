@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="253"/>
+	<parameter name="TeacherName" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TotalOfRecivedAmount" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PaidAmount" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PayAtNow" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DueToPay" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select SBSD.Year, SBSD.Category, count(SCFP.LastID), count(SBSD.LastID), Sub.fee,T.PaymentPercentage, count(SCFP.LastID)*Sub.fee*T.PaymentPercentage/100, count(SBSD.LastID)*Sub.fee*T.PaymentPercentage/100 from StudentBatchSubjectDetails SBSD, Subject Sub, Teacher T,StudentClassFeePayment SCFP where SBSD.SubID=Sub.ID and Sub.TeacherID=T.NIC and SBSD.LastID=SCFP.LastID and month(curdate())=SCFP.PaymentMounth and year(curdate())=SCFP.PaymentYear and T.Name=$P{TeacherName} group by SBSD.Year]]>
+	</queryString>
+	<field name="Year" class="java.lang.Integer"/>
+	<field name="Category" class="java.lang.String"/>
+	<field name="count(SCFP.LastID)" class="java.lang.Long"/>
+	<field name="count(SBSD.LastID)" class="java.lang.Long"/>
+	<field name="fee" class="java.math.BigDecimal"/>
+	<field name="PaymentPercentage" class="java.math.BigDecimal"/>
+	<field name="count(SCFP.LastID)*Sub.fee*T.PaymentPercentage/100" class="java.math.BigDecimal"/>
+	<field name="count(SBSD.LastID)*Sub.fee*T.PaymentPercentage/100" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="32"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Panola Institute Of Education]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mathugama]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Salary Details]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="38" width="555" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="84" splitType="Stretch">
+			<textField>
+				<reportElement x="108" y="16" width="100" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TeacherName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="16" width="100" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Teacher Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="64" width="68" height="20"/>
+				<textElement/>
+				<text><![CDATA[Batch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="64" width="78" height="20"/>
+				<textElement/>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="64" width="137" height="20"/>
+				<textElement/>
+				<text><![CDATA[No Of Student Class Fee Paid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="64" width="72" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total of Student]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="64" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Recived Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="64" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[expected Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="3" y="0" width="65" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="0" width="78" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Category}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="0" width="137" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{count(SCFP.LastID)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="0" width="72" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{count(SBSD.LastID)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{count(SCFP.LastID)*Sub.fee*T.PaymentPercentage/100}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{count(SBSD.LastID)*Sub.fee*T.PaymentPercentage/100}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="127" splitType="Stretch">
+			<staticText>
+				<reportElement x="172" y="0" width="111" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fee]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="283" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{fee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="20" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{PaymentPercentage}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="172" y="20" width="111" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[PaymentPercentage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="40" width="111" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Total of Recived Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="283" y="40" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{TotalOfRecivedAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="60" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{PaidAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="80" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{PayAtNow}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="100" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{DueToPay}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="172" y="60" width="111" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Paid Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="80" width="111" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount Of Pay At Now]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="100" width="111" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount Of Due To Pay]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="34" splitType="Stretch"/>
+	</summary>
+</jasperReport>

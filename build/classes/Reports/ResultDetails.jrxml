@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Batch" class="java.lang.String"/>
+	<parameter name="Subject" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     result.`indexNumber` AS result_indexNumber,
+     result.`Result` AS result_Result,
+     student.`Name` AS student_Name,
+     student.`school` AS student_school,
+     resultdetails.`disRank` AS resultdetails_disRank,
+     resultdetails.`islandRank` AS resultdetails_islandRank,
+     resultdetails.`zScore` AS resultdetails_zScore
+FROM
+     `subject` subject INNER JOIN `studentbatchsubjectdetails` studentbatchsubjectdetails ON subject.`ID` = studentbatchsubjectdetails.`SubID`
+     INNER JOIN `student` student ON studentbatchsubjectdetails.`NIC` = student.`NIC`
+     INNER JOIN `result` result ON studentbatchsubjectdetails.`LastID` = result.`LastID`
+     INNER JOIN `resultdetails` resultdetails ON result.`indexNumber` = resultdetails.`indexNumber`
+WHERE
+     studentbatchsubjectdetails.Year = $P{Batch}
+     and Subject.Name = $P{Subject}]]>
+	</queryString>
+	<field name="result_indexNumber" class="java.lang.String"/>
+	<field name="result_Result" class="java.lang.String"/>
+	<field name="student_Name" class="java.lang.String"/>
+	<field name="student_school" class="java.lang.String"/>
+	<field name="resultdetails_disRank" class="java.lang.String"/>
+	<field name="resultdetails_islandRank" class="java.lang.String"/>
+	<field name="resultdetails_zScore" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="32"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Panola Institute Of Education]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="555" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mathugama]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Result Details]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="36" width="555" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="96" height="20"/>
+				<textElement/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="196" y="41" width="40" height="20"/>
+				<textElement/>
+				<text><![CDATA[Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="41" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Index Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="41" width="96" height="20"/>
+				<textElement/>
+				<text><![CDATA[School]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="41" width="60" height="20"/>
+				<textElement/>
+				<text><![CDATA[D. Rank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="41" width="54" height="20"/>
+				<textElement/>
+				<text><![CDATA[Island Rank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="41" width="73" height="20"/>
+				<textElement/>
+				<text><![CDATA[Z Score]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="96" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Batch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Subject}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="60" y="10" width="36" height="20"/>
+				<textElement/>
+				<text><![CDATA[Batch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="10" width="46" height="20"/>
+				<textElement/>
+				<text><![CDATA[Subject]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="96" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{student_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="0" width="40" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{result_Result}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="0" width="70" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{result_indexNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="0" width="96" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{student_school}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="0" width="60" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{resultdetails_disRank}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="0" width="54" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{resultdetails_islandRank}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="0" width="73" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{resultdetails_zScore}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

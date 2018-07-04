@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="288" pageHeight="216" whenNoDataType="AllSectionsNoDetail" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NIC" class="java.lang.String"/>
+	<parameter name="SBSD.LastID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     Subject.`Name` AS Subject_Name,
+     StudentBatchSubjectDetails.`LastID` AS StudentBatchSubjectDetails_LastID,
+     Student.`Name` AS Student_Name,
+     Student.`NIC` AS Student_NIC,
+     studentphoto.`Photo` AS studentphoto_Photo
+FROM
+     `StudentBatchSubjectDetails` StudentBatchSubjectDetails INNER JOIN `Student` Student ON StudentBatchSubjectDetails.`NIC` = Student.`NIC`
+     INNER JOIN `Subject` Subject ON StudentBatchSubjectDetails.`SubID` = Subject.`ID`
+     INNER JOIN `studentphoto` studentphoto ON Student.`NIC` = studentphoto.`NIC`
+WHERE
+     StudentBatchSubjectDetails.LastID = $P{SBSD.LastID}]]>
+	</queryString>
+	<field name="Subject_Name" class="java.lang.String"/>
+	<field name="StudentBatchSubjectDetails_LastID" class="java.lang.String"/>
+	<field name="Student_Name" class="java.lang.String"/>
+	<field name="Student_NIC" class="java.lang.String"/>
+	<field name="studentphoto_Photo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="288" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Panola Institute Of Education]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="288" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID Card]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="39" width="286" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="86" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="40" width="96" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Subject_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="66" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{StudentBatchSubjectDetails_LastID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="143" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Student_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="20" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Student_NIC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
